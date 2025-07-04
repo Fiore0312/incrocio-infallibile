@@ -32,3 +32,21 @@
 [2025-07-04 13:48:40] [6867bf983c87a] [INFO] [Memory: 0.83MB] [Time: 0s] === Avvio sessione import (ID: 6867bf983c87a) ===
 [2025-07-04 13:48:40] [6867bf983c87a] [INFO] [Memory: 0.87MB] [Time: 0.004s] Cache inizializzate | Context: {"dipendenti":14,"aziende":9,"veicoli":5}
 [2025-07-04 13:48:40] [6867bf983c87a] [INFO] [Memory: 0.87MB] [Time: 0.005s] Configurazioni caricate | Context: {"categorie":["generale","import","kpi"]}
+[2025-07-04 17:02:13] [6867ecf55921e] [INFO] [Memory: 0.83MB] [Time: 0s] === Avvio sessione import (ID: 6867ecf55921e) ===
+[2025-07-04 17:02:13] [6867ecf55921e] [INFO] [Memory: 0.87MB] [Time: 0.004s] Cache inizializzate | Context: {"dipendenti":14,"aziende":9,"veicoli":5}
+[2025-07-04 17:02:13] [6867ecf55921e] [INFO] [Memory: 0.87MB] [Time: 0.006s] Configurazioni caricate | Context: {"categorie":["generale","import","kpi"]}
+[2025-07-04 17:02:35] [6867ed0bdd142] [INFO] [Memory: 0.83MB] [Time: 0s] === Avvio sessione import (ID: 6867ed0bdd142) ===
+[2025-07-04 17:02:35] [6867ed0bdd142] [INFO] [Memory: 0.87MB] [Time: 0.004s] Cache inizializzate | Context: {"dipendenti":14,"aziende":9,"veicoli":5}
+[2025-07-04 17:02:35] [6867ed0bdd142] [INFO] [Memory: 0.87MB] [Time: 0.006s] Configurazioni caricate | Context: {"categorie":["generale","import","kpi"]}
+[2025-07-04 17:03:59] [6867ed5fa258a] [INFO] [Memory: 0.84MB] [Time: 0s] === Avvio sessione import (ID: 6867ed5fa258a) ===
+[2025-07-04 17:03:59] [6867ed5fa258a] [INFO] [Memory: 0.88MB] [Time: 0.003s] Cache inizializzate | Context: {"dipendenti":14,"aziende":9,"veicoli":5}
+[2025-07-04 17:03:59] [6867ed5fa258a] [INFO] [Memory: 0.88MB] [Time: 0.005s] Configurazioni caricate | Context: {"categorie":["generale","import","kpi"]}
+[2025-07-04 17:40:29] [6867f5edd1650] [INFO] [Memory: 0.83MB] [Time: 0s] === Avvio sessione import (ID: 6867f5edd1650) ===
+[2025-07-04 17:40:29] [6867f5edd1650] [INFO] [Memory: 0.87MB] [Time: 0.002s] Cache inizializzate | Context: {"dipendenti":14,"aziende":9,"veicoli":5}
+[2025-07-04 17:40:29] [6867f5edd1650] [INFO] [Memory: 0.87MB] [Time: 0.002s] Configurazioni caricate | Context: {"categorie":["generale","import","kpi"]}
+[2025-07-04 17:40:35] [6867f5f328f7a] [INFO] [Memory: 0.83MB] [Time: 0s] === Avvio sessione import (ID: 6867f5f328f7a) ===
+[2025-07-04 17:40:35] [6867f5f328f7a] [INFO] [Memory: 0.87MB] [Time: 0.003s] Cache inizializzate | Context: {"dipendenti":14,"aziende":9,"veicoli":5}
+[2025-07-04 17:40:35] [6867f5f328f7a] [INFO] [Memory: 0.87MB] [Time: 0.004s] Configurazioni caricate | Context: {"categorie":["generale","import","kpi"]}
+[2025-07-04 17:41:20] [6867f6208e022] [INFO] [Memory: 0.83MB] [Time: 0s] === Avvio sessione import (ID: 6867f6208e022) ===
+[2025-07-04 17:41:20] [6867f6208e022] [INFO] [Memory: 0.87MB] [Time: 0.002s] Cache inizializzate | Context: {"dipendenti":14,"aziende":9,"veicoli":5}
+[2025-07-04 17:41:20] [6867f6208e022] [INFO] [Memory: 0.87MB] [Time: 0.004s] Configurazioni caricate | Context: {"categorie":["generale","import","kpi"]}
