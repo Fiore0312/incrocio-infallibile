@@ -1,0 +1,9 @@
+[2025-07-04 08:37:12] [68677698175b0] [INFO] [Memory: 0.87MB] [Time: 0.001s] === Avvio sessione import (ID: 68677698175b0) ===
+[2025-07-04 08:37:12] [68677698175b0] [INFO] [Memory: 0.91MB] [Time: 0.006s] Cache inizializzate: 13 dipendenti master, 10 veicoli, 26 aliases
+[2025-07-04 08:37:12] [68677698175b0] [INFO] [Memory: 0.89MB] [Time: 0.007s] Match esatto in master_dipendenti: 'Franco Fiorellino' -> ID 1
+[2025-07-04 08:37:12] [68677698175b0] [INFO] [Memory: 0.89MB] [Time: 0.008s] Parsing multiplo con separatore '/': Franco Fiorellino | Matteo Signo
+[2025-07-04 08:37:12] [68677698175b0] [INFO] [Memory: 0.89MB] [Time: 0.009s] Match esatto in master_dipendenti: 'Franco Fiorellino' -> ID 1
+[2025-07-04 08:37:12] [68677698175b0] [INFO] [Memory: 0.89MB] [Time: 0.01s] Trovato dipendente multiplo: 'Franco Fiorellino' da 'Franco Fiorellino/Matteo Signo' (ID: 3)
+[2025-07-04 08:41:26] [686777968929e] [INFO] [Memory: 1.03MB] [Time: 0s] === Avvio sessione import (ID: 686777968929e) ===
+[2025-07-04 08:41:26] [686777968929e] [INFO] [Memory: 1.07MB] [Time: 0.007s] Cache inizializzate: 13 dipendenti master, 10 veicoli, 26 aliases
+[2025-07-04 08:41:26] [686777968929e] [INFO] [Memory: 1.09MB] [Time: 0.058s] DeduplicationEngine inizializzato con soglie: {"time_threshold_minutes":3,"similarity_threshold":0.85,"enable_soft_deduplication":true,"enable_intelligent_merge":true}

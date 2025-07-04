@@ -1,0 +1,44 @@
+[2025-07-03 21:48:56] [6866dea8e6918] [INFO] [Memory: 0.86MB] [Time: 0s] === Avvio sessione import (ID: 6866dea8e6918) ===
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.86MB] [Time: 0s] === Avvio sessione import (ID: 6866df7052441) ===
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.004s] Cache inizializzate: 10 dipendenti master, 10 veicoli, 26 aliases
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.88MB] [Time: 0.004s] Parsing multiplo con separatore '/': Franco Fiorellino | Matteo Signo
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.88MB] [Time: 0.004s] Match esatto in master_dipendenti: 'Franco Fiorellino' -> ID 1
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.88MB] [Time: 0.007s] Trovato dipendente multiplo: 'Franco Fiorellino' da 'Franco Fiorellino/Matteo Signo' (ID: 3)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.009s] Parsing multiplo con separatore ',': Roberto Birocchi | Alex Ferrario
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.009s] Match esatto in master_dipendenti: 'Roberto Birocchi' -> ID 6
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.011s] Trovato dipendente multiplo: 'Roberto Birocchi' da 'Roberto Birocchi,Alex Ferrario' (ID: 98)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.012s] Parsing multiplo con separatore ';': Davide Cestone | Lorenzo Serratore
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.013s] Match esatto in master_dipendenti: 'Davide Cestone' -> ID 9
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.013s] Trovato dipendente multiplo: 'Davide Cestone' da 'Davide Cestone;Lorenzo Serratore' (ID: 102)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.014s] Parsing multiplo con separatore '&': Marco Birocchi | Gabriele De Palma
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.015s] Match esatto in master_dipendenti: 'Marco Birocchi' -> ID 8
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.016s] Trovato dipendente multiplo: 'Marco Birocchi' da 'Marco Birocchi & Gabriele De Palma' (ID: 4)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.017s] Parsing multiplo con separatore '+': Arlind Hoxha | Matteo Di Salvo
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.018s] Match esatto in master_dipendenti: 'Arlind Hoxha' -> ID 3
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.018s] Trovato dipendente multiplo: 'Arlind Hoxha' da 'Arlind Hoxha + Matteo Di Salvo' (ID: 8)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.019s] Parsing multiplo con separatore ' e ': Franco | Matteo
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.92MB] [Time: 0.025s] Match fuzzy: 'Franco' -> 'Franco Fiorellino' (score: 1)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.026s] Trovato dipendente multiplo: 'Franco' da 'Franco e Matteo' (ID: 3)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.028s] Parsing multiplo con separatore ' with ': Alex | Roberto
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.92MB] [Time: 0.03s] Match fuzzy: 'Alex' -> 'Alex Ferrario' (score: 1)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.031s] Trovato dipendente multiplo: 'Alex' da 'Alex with Roberto' (ID: 2)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.032s] Match esatto in master_dipendenti: 'Franco Fiorellino' -> ID 1
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.034s] Match esatto in master_dipendenti: 'Matteo Signo' -> ID 2
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.035s] Match esatto in master_dipendenti: 'Arlind Hoxha' -> ID 3
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.037s] Match esatto in master_dipendenti: 'Lorenzo Serratore' -> ID 4
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.038s] Match in alias: 'Francesco Fiorellino' -> Master ID 1 (Franco Fiorellino)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.04s] Match in alias: 'Matt Signo' -> Master ID 2 (Matteo Signo)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.041s] Match in alias: 'Alessandro Ferrario' -> Master ID 5 (Alex Ferrario)
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.043s] Nome 'Punto' identificato come veicolo master
+[2025-07-03 21:52:16] [6866df7052441] [WARNING] [Memory: 0.9MB] [Time: 0.044s] Creazione dipendente rifiutata | Context: {"name":"Punto","reason":"Non trovato e non valido per creazione"}
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.045s] Nome 'Fiesta' identificato come veicolo master
+[2025-07-03 21:52:16] [6866df7052441] [WARNING] [Memory: 0.9MB] [Time: 0.045s] Creazione dipendente rifiutata | Context: {"name":"Fiesta","reason":"Non trovato e non valido per creazione"}
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.046s] Nome 'Panda' identificato come veicolo master
+[2025-07-03 21:52:16] [6866df7052441] [WARNING] [Memory: 0.9MB] [Time: 0.047s] Creazione dipendente rifiutata | Context: {"name":"Panda","reason":"Non trovato e non valido per creazione"}
+[2025-07-03 21:52:16] [6866df7052441] [WARNING] [Memory: 0.9MB] [Time: 0.048s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Non trovato e non valido per creazione"}
+[2025-07-03 21:52:16] [6866df7052441] [WARNING] [Memory: 0.9MB] [Time: 0.049s] Creazione dipendente rifiutata | Context: {"name":"Admin","reason":"Non trovato e non valido per creazione"}
+[2025-07-03 21:52:16] [6866df7052441] [WARNING] [Memory: 0.9MB] [Time: 0.05s] Creazione dipendente rifiutata | Context: {"name":"System","reason":"Non trovato e non valido per creazione"}
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.058s] Dipendente creato automaticamente | Context: {"name":"Giuseppe Verdi","id":"478"}
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.068s] Dipendente creato automaticamente | Context: {"name":"Maria Rossi","id":"479"}
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.079s] Dipendente creato automaticamente | Context: {"name":"Andrea Bianchi","id":"480"}
+[2025-07-03 21:52:16] [6866df7052441] [INFO] [Memory: 0.9MB] [Time: 0.08s] Parsing multiplo con separatore '/': Franco Fiorellino | Matteo Signo

@@ -1,0 +1,57 @@
+[2025-07-03 21:23:11] [6866d89ff2821] [INFO] [Memory: 1.01MB] [Time: 0s] === Avvio sessione import (ID: 6866d89ff2821) ===
+[2025-07-03 21:23:11] [6866d89ff2821] [INFO] [Memory: 1.01MB] [Time: 0.001s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/apprilevazionepresenze-timbrature-totali-base.csv","type":"timbrature","file_size":71071}
+[2025-07-03 21:23:12] [6866d89ff2821] [INFO] [Memory: 1.01MB] [Time: 0.333s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/apprilevazionepresenze-richieste.csv","type":"richieste","file_size":1757}
+[2025-07-03 21:23:12] [6866d89ff2821] [INFO] [Memory: 1.01MB] [Time: 0.368s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/attivita.csv","type":"attivita","file_size":196570}
+[2025-07-03 21:23:13] [6866d89ff2821] [INFO] [Memory: 1.01MB] [Time: 1.026s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/calendario.csv","type":"calendario","file_size":14512}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.031s] Creazione dipendente rifiutata | Context: {"name":"Punto","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.033s] Creazione dipendente rifiutata | Context: {"name":"Fiesta","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.036s] Creazione dipendente rifiutata | Context: {"name":"Punto","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.048s] Creazione dipendente rifiutata | Context: {"name":"Punto","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.053s] Creazione dipendente rifiutata | Context: {"name":"Fiesta","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.075s] Creazione dipendente rifiutata | Context: {"name":"Aurora Gabriele","reason":"Nome o cognome non valido"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.077s] Creazione dipendente rifiutata | Context: {"name":"Aurora Gabriele","reason":"Nome o cognome non valido"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.088s] Creazione dipendente rifiutata | Context: {"name":"Punto","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [INFO] [Memory: 1.02MB] [Time: 1.099s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/progetti.csv","type":"progetti","file_size":4146}
+[2025-07-03 21:23:13] [6866d89ff2821] [INFO] [Memory: 1.02MB] [Time: 1.147s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/registro_auto.csv","type":"registro_auto","file_size":2093}
+[2025-07-03 21:23:13] [6866d89ff2821] [INFO] [Memory: 1.02MB] [Time: 1.184s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/teamviewer_bait.csv","type":"teamviewer_bait","file_size":22283}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.246s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.257s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.258s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.258s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.258s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.258s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.259s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.259s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.259s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.262s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.263s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.263s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.264s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.266s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.268s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.269s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.27s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.271s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.271s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.271s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.271s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.272s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.272s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.273s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.273s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.273s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.274s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.274s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.289s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.291s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.291s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.294s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.295s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.297s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [INFO] [Memory: 1.02MB] [Time: 1.302s] Inizio elaborazione file | Context: {"filename":"file-orig-300625\/teamviewer_gruppo.csv","type":"teamviewer_gruppo","file_size":5017}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.309s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:23:13] [6866d89ff2821] [WARNING] [Memory: 1.03MB] [Time: 1.31s] Creazione dipendente rifiutata | Context: {"name":"Info","reason":"Nome non valido secondo blacklist\/regole"}
+[2025-07-03 21:24:45] [6866d8fd3365d] [INFO] [Memory: 1.01MB] [Time: 0.001s] === Avvio sessione import (ID: 6866d8fd3365d) ===
+[2025-07-03 21:24:45] [6866d8fd3365d] [INFO] [Memory: 1.01MB] [Time: 0.003s] Inizio elaborazione file | Context: {"filename":"uploads\/2025-07-03_21-24-45\/\/apprilevazionepresenze-timbrature-totali-base.csv","type":"timbrature","file_size":71071}
+[2025-07-03 21:25:00] [6866d90c42c20] [INFO] [Memory: 1.01MB] [Time: 0s] === Avvio sessione import (ID: 6866d90c42c20) ===
+[2025-07-03 21:25:00] [6866d90c42c20] [INFO] [Memory: 1.02MB] [Time: 0.002s] Inizio elaborazione file | Context: {"filename":"uploads\/2025-07-03_21-25-00\/\/attivita.csv","type":"attivita","file_size":196570}
