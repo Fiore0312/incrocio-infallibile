@@ -1,0 +1,15 @@
+{
+  "project_name": "incrocio-infallibile",
+  "project_type": "api",
+  "framework": "custom",
+  "languages": [
+    "php",
+    "markdown",
+    "sql",
+    "javascript",
+    "css"
+  ],
+  "setup_date": "2025-07-05T22:41:07.288336",
+  "version": "1.0.0",
+  "agent_version": "1.0.0"
+}

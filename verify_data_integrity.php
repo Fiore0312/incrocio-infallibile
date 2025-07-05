@@ -286,7 +286,7 @@ try {
 ?>
 
 <p>
-    <a href="diagnose_data.php">← Diagnostica Base</a> | 
+    <a href="diagnose_data_master.php">← Diagnostica Base</a> | 
     <a href="index.php">Dashboard</a> |
     <a href="logs/">📊 View Logs</a>
 </p>

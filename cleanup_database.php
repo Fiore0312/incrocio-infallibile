@@ -281,6 +281,6 @@ try {
 <p>
     <a href="debug_dipendenti.php">Debug Dipendenti</a> | 
     <a href="debug_duplicati.php">Debug Duplicati</a> | 
-    <a href="diagnose_data.php">← Diagnostica</a> | 
+    <a href="diagnose_data_master.php">← Diagnostica</a> | 
     <a href="index.php">Dashboard</a>
 </p>

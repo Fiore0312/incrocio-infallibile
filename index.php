@@ -57,6 +57,9 @@ try {
                 <a class="nav-link" href="calculate_kpis.php">
                     <i class="fas fa-calculator me-1"></i>Calcola KPI
                 </a>
+                <a class="nav-link" href="master_data_console.php">
+                    <i class="fas fa-database me-1"></i>Master Data
+                </a>
                 <a class="nav-link" href="settings.php">
                     <i class="fas fa-cog me-1"></i>Configurazioni
                 </a>

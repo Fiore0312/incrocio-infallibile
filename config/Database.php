@@ -1,10 +1,34 @@
 <?php
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'employee_analytics';
-    private $username = 'root';
-    private $password = '';
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     private $conn;
+    
+    public function __construct() {
+        $this->loadEnvVariables();
+    }
+    
+    private function loadEnvVariables() {
+        // Load .env file if exists
+        $envFile = __DIR__ . '/../.env';
+        if (file_exists($envFile)) {
+            $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                if (strpos($line, '#') !== 0 && strpos($line, '=') !== false) {
+                    list($key, $value) = explode('=', $line, 2);
+                    $_ENV[trim($key)] = trim($value);
+                }
+            }
+        }
+        
+        // Set database connection parameters
+        $this->host = $_ENV['DB_HOST'] ?? 'localhost';
+        $this->db_name = $_ENV['DB_NAME'] ?? 'employee_analytics';
+        $this->username = $_ENV['DB_USERNAME'] ?? 'root';
+        $this->password = $_ENV['DB_PASSWORD'] ?? '';
+    }
     
     public function getConnection() {
         $this->conn = null;
@@ -21,7 +45,8 @@ class Database {
             if (strpos($e->getMessage(), 'Unknown database') !== false) {
                 throw new Exception("Database 'employee_analytics' non trovato. Eseguire prima il setup.");
             }
-            throw new Exception("Connection Error: " . $e->getMessage());
+            error_log("Database Connection Error: " . $e->getMessage());
+            throw new Exception("Errore di connessione al database. Verificare le credenziali.");
         }
         
         return $this->conn;

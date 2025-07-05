@@ -111,7 +111,10 @@ try {
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home me-1"></i>Dashboard
                 </a>
-                <a class="nav-link" href="diagnose_data.php">
+                <a class="nav-link" href="master_data_console.php">
+                    <i class="fas fa-database me-1"></i>Master Data
+                </a>
+                <a class="nav-link" href="diagnose_data_master.php">
                     <i class="fas fa-stethoscope me-1"></i>Diagnostica
                 </a>
             </div>
@@ -201,7 +204,7 @@ try {
                                     <a href="index.php" class="btn btn-success">
                                         <i class="fas fa-chart-line me-2"></i>Vai al Dashboard
                                     </a>
-                                    <a href="diagnose_data.php" class="btn btn-info">
+                                    <a href="diagnose_data_master.php" class="btn btn-info">
                                         <i class="fas fa-stethoscope me-2"></i>Verifica Dati
                                     </a>
                                 </div>

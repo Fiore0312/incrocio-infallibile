@@ -365,6 +365,6 @@ try {
 
 <p>
     <a href="fix_database_issues.php">🔧 Vai alle Correzioni</a> | 
-    <a href="diagnose_data.php">📊 Diagnostica Completa</a> | 
+    <a href="diagnose_data_master.php">📊 Diagnostica Completa</a> | 
     <a href="index.php">🏠 Dashboard</a>
 </p>

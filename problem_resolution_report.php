@@ -33,7 +33,7 @@ try {
     
     echo "<h4>📋 Situazione Attuale:</h4>\n";
     echo "<ul>\n";
-    echo "<li><strong>diagnose_data.php</strong> interroga tabelle LEGACY (dipendenti, clienti, timbrature, attivita)</li>\n";
+    echo "<li><strong>diagnose_data_master.php</strong> interroga tabelle LEGACY (dipendenti, clienti, timbrature, attivita)</li>\n";
     echo "<li>Le <strong>Master Tables</strong> sono state create ma hanno nomi diversi</li>\n";
     echo "<li>Esiste <strong>confusione</strong> tra due sistemi di naming delle tabelle</li>\n";
     echo "<li>I dati <strong>puliti</strong> sono nelle master tables, ma non vengono visualizzati</li>\n";
@@ -175,7 +175,7 @@ try {
         echo "<h5>✅ SITUAZIONE OTTIMALE: Master Tables Popolate</h5>\n";
         echo "<p>Le master tables contengono dati puliti. <strong>Soluzione semplice:</strong></p>\n";
         echo "<ol>\n";
-        echo "<li>Utilizzare <strong>diagnose_data_master.php</strong> invece di diagnose_data.php</li>\n";
+        echo "<li>Utilizzare <strong>diagnose_data_master.php</strong> invece di diagnose_data_master.php</li>\n";
         echo "<li>Aggiornare i collegamenti nel dashboard principale</li>\n";
         echo "<li>Verificare che tutti i file usino master tables</li>\n";
         echo "</ol>\n";
@@ -184,7 +184,7 @@ try {
         echo "<div class='action-needed'>\n";
         echo "<h5>🚀 AZIONE IMMEDIATA:</h5>\n";
         echo "<p>Sostituire nel file principale (index.php o dashboard) il link:</p>\n";
-        echo "<code>diagnose_data.php</code> → <code>diagnose_data_master.php</code>\n";
+        echo "<code>diagnose_data_master.php</code> → <code>diagnose_data_master.php</code>\n";
         echo "</div>\n";
     } else {
         echo "<div class='alert alert-warning'>\n";
@@ -219,7 +219,7 @@ try {
     echo "<h5>📊 Test Sistema Legacy</h5>\n";
     echo "</div>\n";
     echo "<div class='card-body'>\n";
-    echo "<a href='diagnose_data.php' class='btn btn-warning' target='_blank'>Apri Diagnose Legacy</a>\n";
+    echo "<a href='diagnose_data_master.php' class='btn btn-warning' target='_blank'>Apri Diagnose Legacy</a>\n";
     echo "<p class='mt-2'><small>Mostra i vecchi dati problematici</small></p>\n";
     echo "</div>\n";
     echo "</div>\n";
@@ -289,7 +289,7 @@ try {
     // 6. SUMMARY ESECUTIVO
     echo "<div class='alert alert-primary'>\n";
     echo "<h3>📝 SUMMARY ESECUTIVO</h3>\n";
-    echo "<p><strong>Problema:</strong> La pagina diagnose_data.php mostra vecchi dati problematici perché interroga tabelle legacy invece delle nuove master tables pulite.</p>\n";
+    echo "<p><strong>Problema:</strong> La pagina diagnose_data_master.php mostra vecchi dati problematici perché interroga tabelle legacy invece delle nuove master tables pulite.</p>\n";
     echo "<p><strong>Causa:</strong> Coesistenza di due sistemi database (legacy + master) con nomi diversi.</p>\n";
     echo "<p><strong>Soluzione:</strong> Utilizzare diagnose_data_master.php che interroga le master tables contenenti i dati corretti e puliti.</p>\n";
     echo "<p><strong>Impatto:</strong> Risoluzione immediata di tutti i problemi segnalati (Andrea Bianchi, parsing errori, dipendenti mancanti).</p>\n";

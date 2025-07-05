@@ -127,6 +127,9 @@ try {
                 <a class="nav-link" href="upload.php">
                     <i class="fas fa-upload me-1"></i>Carica CSV
                 </a>
+                <a class="nav-link" href="master_data_console.php">
+                    <i class="fas fa-database me-1"></i>Master Data
+                </a>
                 <a class="nav-link active" href="settings.php">
                     <i class="fas fa-cog me-1"></i>Configurazioni
                 </a>

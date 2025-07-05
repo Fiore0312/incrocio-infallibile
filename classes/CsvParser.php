@@ -957,7 +957,7 @@ class CsvParser {
             // Sistemi/Termini tecnici
             'Info', 'System', 'Admin', 'Test', 'User', 'Guest', 'TRUE', 'FALSE', 'NULL',
             // Termini generici
-            'Aurora', 'Reminder', 'Meeting', 'Riunione', 'Supporto', 'Backup',
+            'Reminder', 'Meeting', 'Riunione', 'Supporto', 'Backup',
             // Termini aziendali
             'Cliente', 'Fornitore', 'Ufficio', 'Sede', 'Filiale'
         ];

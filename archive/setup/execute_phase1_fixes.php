@@ -354,6 +354,6 @@ try {
 
 <p>
     <a href="analyze_current_issues.php">🔍 Analisi Problemi</a> | 
-    <a href="diagnose_data.php">📊 Diagnostica</a> | 
+    <a href="diagnose_data_master.php">📊 Diagnostica</a> | 
     <a href="index.php">🏠 Dashboard</a>
 </p>

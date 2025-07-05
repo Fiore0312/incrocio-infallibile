@@ -24,7 +24,7 @@ echo "</head>\n<body>\n";
 
 echo "<div class='container mt-4'>\n";
 echo "<h1><i class='fas fa-database'></i> Analisi Completa Struttura Database</h1>\n";
-echo "<p class='text-muted'>Diagnosi problemi: perché diagnose_data.php mostra ancora i vecchi dati?</p>\n";
+echo "<p class='text-muted'>Diagnosi problemi: perché diagnose_data_master.php mostra ancora i vecchi dati?</p>\n";
 
 try {
     $database = new Database();
@@ -178,16 +178,16 @@ try {
     
     if ($legacy_has_data && $master_has_data) {
         echo "<p><strong>DOPPIA STRUTTURA ATTIVA:</strong> Sia le tabelle legacy che master contengono dati!</p>\n";
-        echo "<p>📄 <code>diagnose_data.php</code> sta interrogando le tabelle legacy che contengono ancora i vecchi dati problematici.</p>\n";
-        echo "<p>🎯 <strong>Soluzione:</strong> Aggiornare <code>diagnose_data.php</code> per utilizzare le master tables.</p>\n";
+        echo "<p>📄 <code>diagnose_data_master.php</code> sta interrogando le tabelle legacy che contengono ancora i vecchi dati problematici.</p>\n";
+        echo "<p>🎯 <strong>Soluzione:</strong> Aggiornare <code>diagnose_data_master.php</code> per utilizzare le master tables.</p>\n";
     } elseif ($legacy_has_data && !$master_has_data) {
         echo "<p><strong>MIGRAZIONE NON COMPLETATA:</strong> Solo le tabelle legacy contengono dati!</p>\n";
         echo "<p>📄 Le master tables sono vuote, il setup non ha migrato i dati.</p>\n";
         echo "<p>🎯 <strong>Soluzione:</strong> Eseguire migrazione dati da legacy a master tables.</p>\n";
     } elseif (!$legacy_has_data && $master_has_data) {
         echo "<p><strong>MIGRAZIONE COMPLETATA:</strong> Solo le master tables contengono dati!</p>\n";
-        echo "<p>📄 <code>diagnose_data.php</code> deve essere aggiornato per utilizzare le master tables.</p>\n";
-        echo "<p>🎯 <strong>Soluzione:</strong> Aggiornare query in <code>diagnose_data.php</code>.</p>\n";
+        echo "<p>📄 <code>diagnose_data_master.php</code> deve essere aggiornato per utilizzare le master tables.</p>\n";
+        echo "<p>🎯 <strong>Soluzione:</strong> Aggiornare query in <code>diagnose_data_master.php</code>.</p>\n";
     } else {
         echo "<p><strong>NESSUN DATO:</strong> Né legacy né master tables contengono dati!</p>\n";
         echo "<p>🎯 <strong>Soluzione:</strong> Importare dati di base nel sistema.</p>\n";
@@ -356,15 +356,15 @@ try {
     echo "<ol>\n";
     
     if ($legacy_has_data && $master_has_data) {
-        echo "<li><strong>Aggiornare diagnose_data.php</strong> per utilizzare master tables invece di legacy</li>\n";
+        echo "<li><strong>Aggiornare diagnose_data_master.php</strong> per utilizzare master tables invece di legacy</li>\n";
         echo "<li>Verificare altri file che usano tabelle legacy</li>\n";
         echo "<li>Pianificare eliminazione tabelle legacy dopo verifica</li>\n";
     } elseif ($legacy_has_data && !$master_has_data) {
         echo "<li><strong>Eseguire setup master tables</strong> con <code>simple_setup_mariadb.php</code></li>\n";
         echo "<li>Migrare dati puliti da legacy a master</li>\n";
-        echo "<li>Aggiornare diagnose_data.php dopo migrazione</li>\n";
+        echo "<li>Aggiornare diagnose_data_master.php dopo migrazione</li>\n";
     } elseif (!$legacy_has_data && $master_has_data) {
-        echo "<li><strong>Aggiornare diagnose_data.php</strong> immediatamente</li>\n";
+        echo "<li><strong>Aggiornare diagnose_data_master.php</strong> immediatamente</li>\n";
         echo "<li>Rimuovere riferimenti a tabelle legacy</li>\n";
     } else {
         echo "<li><strong>Importare dati iniziali</strong> nel sistema</li>\n";
@@ -377,7 +377,7 @@ try {
     echo "<div class='col-md-6'>\n";
     echo "<h5>🔧 File da Modificare:</h5>\n";
     echo "<ul>\n";
-    echo "<li><code>diagnose_data.php</code> - Query su master tables</li>\n";
+    echo "<li><code>diagnose_data_master.php</code> - Query su master tables</li>\n";
     echo "<li>Altri file di analisi e reporting</li>\n";
     echo "<li>Dashboard principale se necessario</li>\n";
     echo "</ul>\n";
@@ -401,7 +401,7 @@ try {
         echo "<a href='simple_setup_mariadb.php' class='btn btn-primary'>🔧 Setup Master Tables</a>\n";
     }
     
-    echo "<a href='diagnose_data.php' class='btn btn-warning'>📊 Diagnose Data (Legacy)</a>\n";
+    echo "<a href='diagnose_data_master.php' class='btn btn-warning'>📊 Diagnose Data (Legacy)</a>\n";
     echo "<a href='master_data_console.php' class='btn btn-success'>🎛️ Master Data Console</a>\n";
     echo "<a href='smart_upload_final.php' class='btn btn-info'>📤 Smart Upload</a>\n";
     echo "</div>\n";

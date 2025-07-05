@@ -3,6 +3,7 @@ session_start();
 require_once 'classes/CsvParser.php';
 require_once 'classes/KpiCalculator.php';
 require_once 'classes/ValidationEngine.php';
+require_once 'config/Security.php';
 
 $message = '';
 $message_type = '';
@@ -10,11 +11,17 @@ $upload_results = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        // Validate CSRF token
+        if (!isset($_POST['csrf_token']) || !Security::verifyCsrfToken($_POST['csrf_token'])) {
+            throw new Exception("Token di sicurezza non valido. Riprova.");
+        }
+        
         $database = new Database();
         
         if (!$database->databaseExists()) {
             throw new Exception("Database non trovato. Eseguire prima il setup.");
         }
+        
         $upload_dir = 'uploads/' . date('Y-m-d_H-i-s') . '/';
         
         if (!file_exists($upload_dir)) {
@@ -25,7 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         foreach ($_FILES as $key => $file) {
             if ($file['error'] === UPLOAD_ERR_OK) {
+                // Validate file security
+                Security::validateFileUpload($file);
+                
                 $filename = basename($file['name']);
+                // Sanitize filename
+                $filename = preg_replace('/[^a-zA-Z0-9._-]/', '', $filename);
                 $target_path = $upload_dir . $filename;
                 
                 if (move_uploaded_file($file['tmp_name'], $target_path)) {
@@ -93,6 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home me-1"></i>Dashboard
                 </a>
+                <a class="nav-link" href="master_data_console.php">
+                    <i class="fas fa-database me-1"></i>Master Data
+                </a>
             </div>
         </div>
     </nav>
@@ -136,6 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <!-- Upload Form -->
                         <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                            <input type="hidden" name="csrf_token" value="<?= Security::generateCsrfToken() ?>">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="timbrature" class="form-label">Timbrature</label>

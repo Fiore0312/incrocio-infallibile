@@ -49,4 +49,4 @@ try {
 }
 ?>
 
-<p><a href="diagnose_data.php">← Torna alla Diagnostica</a></p>
+<p><a href="diagnose_data_master.php">← Torna alla Diagnostica</a></p>

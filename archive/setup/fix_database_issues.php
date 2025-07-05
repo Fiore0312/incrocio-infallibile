@@ -321,7 +321,7 @@ try {
 </style>
 
 <p>
-    <a href="diagnose_data.php">📊 Diagnostica Completa</a> | 
+    <a href="diagnose_data_master.php">📊 Diagnostica Completa</a> | 
     <a href="debug_dipendenti.php">👥 Debug Dipendenti</a> | 
     <a href="index.php">🏠 Dashboard</a>
 </p>
