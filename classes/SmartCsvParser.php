@@ -685,20 +685,511 @@ class SmartCsvParser {
         return null;
     }
     
-    // Metodi per altri tipi di file (placeholder)
+    // Metodi per altri tipi di file
     private function processTimbratureFile($filepath) {
-        // TODO: Implementare logica smart per timbrature
-        throw new Exception("Processing timbrature non ancora implementato");
+        $this->logger->info("Inizio processing timbrature", ['file' => $filepath]);
+        
+        $handle = fopen($filepath, 'r');
+        if (!$handle) {
+            throw new Exception("Impossibile aprire file timbrature: $filepath");
+        }
+        
+        // Rileva separatore
+        $separator = $this->detectCsvSeparator($handle);
+        
+        // Leggi header
+        $header = fgetcsv($handle, 0, $separator);
+        if (!$header) {
+            throw new Exception("Header timbrature non valido");
+        }
+        
+        $header = $this->removeBomFromHeader($header);
+        $this->logger->info("Header timbrature", ['columns' => $header]);
+        
+        $row_count = 0;
+        while (($row = fgetcsv($handle, 0, $separator)) !== FALSE) {
+            $row_count++;
+            $this->stats['processed']++;
+            
+            if (count($row) !== count($header)) {
+                $this->warnings[] = "Riga $row_count: numero colonne non corrispondente";
+                $this->stats['skipped']++;
+                continue;
+            }
+            
+            $data = array_combine($header, $row);
+            $data = $this->cleanRowData($data);
+            
+            if ($this->processTimbratureRow($data)) {
+                $this->stats['inserted']++;
+            } else {
+                $this->stats['skipped']++;
+            }
+        }
+        
+        fclose($handle);
+        $this->logger->info("Completato processing timbrature", ['rows' => $row_count]);
+        
+        return [
+            'success' => true,
+            'stats' => $this->stats,
+            'errors' => $this->errors,
+            'warnings' => $this->warnings
+        ];
     }
     
     private function processTeamviewerFile($filepath) {
-        // TODO: Implementare logica smart per teamviewer
-        throw new Exception("Processing teamviewer non ancora implementato");
+        $this->logger->info("Inizio processing teamviewer", ['file' => $filepath]);
+        
+        $handle = fopen($filepath, 'r');
+        if (!$handle) {
+            throw new Exception("Impossibile aprire file teamviewer: $filepath");
+        }
+        
+        // Rileva separatore
+        $separator = $this->detectCsvSeparator($handle);
+        
+        // Leggi header
+        $header = fgetcsv($handle, 0, $separator);
+        if (!$header) {
+            throw new Exception("Header teamviewer non valido");
+        }
+        
+        $header = $this->removeBomFromHeader($header);
+        $this->logger->info("Header teamviewer", ['columns' => $header]);
+        
+        $row_count = 0;
+        while (($row = fgetcsv($handle, 0, $separator)) !== FALSE) {
+            $row_count++;
+            $this->stats['processed']++;
+            
+            if (count($row) !== count($header)) {
+                $this->warnings[] = "Riga $row_count: numero colonne non corrispondente";
+                $this->stats['skipped']++;
+                continue;
+            }
+            
+            $data = array_combine($header, $row);
+            $data = $this->cleanRowData($data);
+            
+            if ($this->processTeamviewerRow($data)) {
+                $this->stats['inserted']++;
+            } else {
+                $this->stats['skipped']++;
+            }
+        }
+        
+        fclose($handle);
+        $this->logger->info("Completato processing teamviewer", ['rows' => $row_count]);
+        
+        return [
+            'success' => true,
+            'stats' => $this->stats,
+            'errors' => $this->errors,
+            'warnings' => $this->warnings
+        ];
     }
     
     private function processCalendarioFile($filepath) {
-        // TODO: Implementare logica smart per calendario
-        throw new Exception("Processing calendario non ancora implementato");
+        $this->logger->info("Inizio processing calendario", ['file' => $filepath]);
+        
+        $handle = fopen($filepath, 'r');
+        if (!$handle) {
+            throw new Exception("Impossibile aprire file calendario: $filepath");
+        }
+        
+        // Rileva separatore
+        $separator = $this->detectCsvSeparator($handle);
+        
+        // Leggi header
+        $header = fgetcsv($handle, 0, $separator);
+        if (!$header) {
+            throw new Exception("Header calendario non valido");
+        }
+        
+        $header = $this->removeBomFromHeader($header);
+        $this->logger->info("Header calendario", ['columns' => $header]);
+        
+        $row_count = 0;
+        while (($row = fgetcsv($handle, 0, $separator)) !== FALSE) {
+            $row_count++;
+            $this->stats['processed']++;
+            
+            if (count($row) !== count($header)) {
+                $this->warnings[] = "Riga $row_count: numero colonne non corrispondente";
+                $this->stats['skipped']++;
+                continue;
+            }
+            
+            $data = array_combine($header, $row);
+            $data = $this->cleanRowData($data);
+            
+            if ($this->processCalendarioRow($data)) {
+                $this->stats['inserted']++;
+            } else {
+                $this->stats['skipped']++;
+            }
+        }
+        
+        fclose($handle);
+        $this->logger->info("Completato processing calendario", ['rows' => $row_count]);
+        
+        return [
+            'success' => true,
+            'stats' => $this->stats,
+            'errors' => $this->errors,
+            'warnings' => $this->warnings
+        ];
+    }
+    
+    // Metodi helper per processing righe specifiche
+    
+    private function processTimbratureRow($data) {
+        try {
+            // Rileva dipendente
+            $dipendente_name = $this->getValueSafe($data, ['dipendente nome']) . ' ' . $this->getValueSafe($data, ['dipendente cognome']);
+            $dipendente_id = $this->findOrCreateEmployee($dipendente_name);
+            
+            if (!$dipendente_id) {
+                $this->warnings[] = "Dipendente non trovato per timbratura: $dipendente_name";
+                return false;
+            }
+            
+            // Rileva cliente
+            $cliente_id = null;
+            $cliente_name = $this->getValueSafe($data, ['cliente nome']);
+            if (!empty($cliente_name)) {
+                $cliente_id = $this->findOrCreateCompany($cliente_name);
+            }
+            
+            // Inserisci timbratura
+            $sql = "INSERT INTO timbrature (
+                dipendente_id, cliente_id, data, ora_inizio, ora_fine, ore_totali, 
+                ore_arrotondate, ore_nette_pause, descrizione_attivita
+            ) VALUES (
+                :dipendente_id, :cliente_id, :data, :ora_inizio, :ora_fine, :ore_totali,
+                :ore_arrotondate, :ore_nette_pause, :descrizione
+            ) ON DUPLICATE KEY UPDATE
+                ore_totali = VALUES(ore_totali),
+                updated_at = CURRENT_TIMESTAMP";
+                
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute([
+                ':dipendente_id' => $dipendente_id,
+                ':cliente_id' => $cliente_id,
+                ':data' => $this->parseDate($this->getValueSafe($data, ['ora inizio'])),
+                ':ora_inizio' => $this->parseTime($this->getValueSafe($data, ['ora inizio'])),
+                ':ora_fine' => $this->parseTime($this->getValueSafe($data, ['ora fine'])),
+                ':ore_totali' => $this->parseFloat($this->getValueSafe($data, ['ore'], '0')),
+                ':ore_arrotondate' => $this->parseFloat($this->getValueSafe($data, ['ore arrotondate'], '0')),
+                ':ore_nette_pause' => $this->parseFloat($this->getValueSafe($data, ['centesimi al netto delle pause'], '0')),
+                ':descrizione' => $this->getValueSafe($data, ['descrizione attivita'])
+            ]);
+            
+        } catch (Exception $e) {
+            $this->errors[] = "Errore timbratura: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    private function processTeamviewerRow($data) {
+        try {
+            // Rileva dipendente
+            $dipendente_name = $this->getValueSafe($data, ['Utente', 'Assegnatario']);
+            $dipendente_id = $this->findOrCreateEmployee($dipendente_name);
+            
+            if (!$dipendente_id) {
+                $this->warnings[] = "Dipendente non trovato per TeamViewer: $dipendente_name";
+                return false;
+            }
+            
+            // Inserisci sessione TeamViewer
+            $sql = "INSERT INTO teamviewer_sessioni (
+                dipendente_id, nome_cliente, codice_sessione, tipo_sessione, 
+                data_inizio, data_fine, durata_minuti, descrizione, fatturabile
+            ) VALUES (
+                :dipendente_id, :nome_cliente, :codice_sessione, :tipo_sessione,
+                :data_inizio, :data_fine, :durata_minuti, :descrizione, :fatturabile
+            ) ON DUPLICATE KEY UPDATE
+                durata_minuti = VALUES(durata_minuti),
+                updated_at = CURRENT_TIMESTAMP";
+                
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute([
+                ':dipendente_id' => $dipendente_id,
+                ':nome_cliente' => $this->getValueSafe($data, ['Nome', 'Computer']),
+                ':codice_sessione' => $this->getValueSafe($data, ['Codice', 'ID']),
+                ':tipo_sessione' => $this->getValueSafe($data, ['Tipo di sessione'], 'Controllo remoto'),
+                ':data_inizio' => $this->parseDateTime($this->getValueSafe($data, ['Inizio'])),
+                ':data_fine' => $this->parseDateTime($this->getValueSafe($data, ['Fine'])),
+                ':durata_minuti' => $this->parseDuration($this->getValueSafe($data, ['Durata'], '0')),
+                ':descrizione' => $this->getValueSafe($data, ['Descrizione']),
+                ':fatturabile' => 1
+            ]);
+            
+        } catch (Exception $e) {
+            $this->errors[] = "Errore TeamViewer: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    private function processCalendarioRow($data) {
+        try {
+            // Rileva dipendente
+            $dipendente_name = $this->getValueSafe($data, ['ATTENDEE']);
+            
+            // Verifica se è un veicolo invece di un dipendente
+            if ($this->isVehicleName($dipendente_name)) {
+                $this->warnings[] = "ATTENDEE è un veicolo, non un dipendente: $dipendente_name";
+                return false;
+            }
+            
+            $dipendente_id = $this->findOrCreateEmployee($dipendente_name);
+            
+            if (!$dipendente_id) {
+                $this->warnings[] = "Dipendente non trovato per calendario: $dipendente_name";
+                return false;
+            }
+            
+            // Inserisci evento calendario
+            $sql = "INSERT INTO calendario (
+                dipendente_id, titolo, data_inizio, data_fine, location, note, priorita
+            ) VALUES (
+                :dipendente_id, :titolo, :data_inizio, :data_fine, :location, :note, :priorita
+            ) ON DUPLICATE KEY UPDATE
+                titolo = VALUES(titolo),
+                location = VALUES(location),
+                updated_at = CURRENT_TIMESTAMP";
+                
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute([
+                ':dipendente_id' => $dipendente_id,
+                ':titolo' => $this->getValueSafe($data, ['SUMMARY'], ''),
+                ':data_inizio' => $this->parseDateTime($this->getValueSafe($data, ['DTSTART'])),
+                ':data_fine' => $this->parseDateTime($this->getValueSafe($data, ['DTEND'])),
+                ':location' => $this->getValueSafe($data, ['LOCATION']),
+                ':note' => $this->getValueSafe($data, ['NOTES']),
+                ':priorita' => $this->getValueSafe($data, ['PRIORITY'], 5)
+            ]);
+            
+        } catch (Exception $e) {
+            $this->errors[] = "Errore calendario: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    // Metodi helper aggiuntivi
+    
+    private function detectCsvSeparator($handle) {
+        $pos = ftell($handle);
+        $first_line = fgets($handle);
+        fseek($handle, $pos);
+        
+        if (!$first_line) {
+            return ';';
+        }
+        
+        $separators = [',', ';', "\t", '|'];
+        $separator_counts = [];
+        
+        foreach ($separators as $sep) {
+            $test_sep = ($sep === "\t") ? "\t" : $sep;
+            $count = substr_count($first_line, $test_sep);
+            $separator_counts[$test_sep] = $count;
+        }
+        
+        $best_separator = array_search(max($separator_counts), $separator_counts);
+        return $best_separator ?: ';';
+    }
+    
+    private function removeBomFromHeader($header) {
+        if (empty($header)) return $header;
+        
+        $first_col = $header[0];
+        if (substr($first_col, 0, 3) === "\xEF\xBB\xBF") {
+            $header[0] = substr($first_col, 3);
+        }
+        
+        $cleaned_header = [];
+        foreach ($header as $col) {
+            $cleaned_header[] = trim($col, " \t\n\r\0\x0B\xEF\xBB\xBF");
+        }
+        
+        return $cleaned_header;
+    }
+    
+    private function getValueSafe($data, $keys, $default = null) {
+        if (!is_array($keys)) {
+            $keys = [$keys];
+        }
+        
+        foreach ($keys as $key) {
+            if (isset($data[$key]) && !empty(trim($data[$key]))) {
+                return trim($data[$key]);
+            }
+        }
+        
+        return $default;
+    }
+    
+    private function cleanRowData($data) {
+        $cleaned = [];
+        foreach ($data as $key => $value) {
+            $cleaned_key = trim($key);
+            $cleaned_value = trim($value);
+            $cleaned[$cleaned_key] = $cleaned_value;
+        }
+        return $cleaned;
+    }
+    
+    private function parseDate($dateString) {
+        if (empty($dateString)) return null;
+        
+        $formats = ['d/m/Y', 'Y-m-d', 'd/m/Y H:i', 'Y-m-d H:i:s'];
+        
+        foreach ($formats as $format) {
+            $date = DateTime::createFromFormat($format, $dateString);
+            if ($date !== false) {
+                return $date->format('Y-m-d');
+            }
+        }
+        
+        return null;
+    }
+    
+    private function parseDateTime($dateString) {
+        if (empty($dateString)) return null;
+        
+        $formats = ['d/m/Y H:i:s', 'Y-m-d H:i:s', 'd/m/Y H:i', 'Y-m-d H:i', 'd/m/Y', 'Y-m-d'];
+        
+        foreach ($formats as $format) {
+            $date = DateTime::createFromFormat($format, $dateString);
+            if ($date !== false) {
+                return $date->format('Y-m-d H:i:s');
+            }
+        }
+        
+        return null;
+    }
+    
+    private function parseTime($timeString) {
+        if (empty($timeString)) return null;
+        
+        $date = DateTime::createFromFormat('d/m/Y H:i', $timeString);
+        if ($date !== false) {
+            return $date->format('H:i:s');
+        }
+        
+        return null;
+    }
+    
+    private function parseFloat($value) {
+        if (empty($value)) return 0;
+        return (float) str_replace(',', '.', $value);
+    }
+    
+    private function parseDuration($durationString) {
+        if (empty($durationString)) return 0;
+        
+        if (strpos($durationString, 'm') !== false) {
+            return (int) str_replace('m', '', $durationString);
+        }
+        
+        if (strpos($durationString, ':') !== false) {
+            $parts = explode(':', $durationString);
+            if (count($parts) >= 2) {
+                return (int)$parts[0] * 60 + (int)$parts[1];
+            }
+        }
+        
+        return (int) $durationString;
+    }
+    
+    private function isVehicleName($name) {
+        $vehicle_names = ['Punto', 'Fiesta', 'Peugeot', 'Auto', 'Veicolo'];
+        return in_array(trim($name), $vehicle_names);
+    }
+    
+    private function findOrCreateEmployee($fullName) {
+        if (empty($fullName)) return null;
+        
+        // Cerca prima nel cache
+        if ($this->master_employees_cache) {
+            foreach ($this->master_employees_cache as $emp) {
+                if (stripos($emp['nome_completo'], $fullName) !== false || 
+                    stripos($fullName, $emp['nome_completo']) !== false) {
+                    return $emp['id'];
+                }
+            }
+        }
+        
+        // Se non trovato, cerca nel database
+        $stmt = $this->conn->prepare("SELECT id FROM dipendenti WHERE CONCAT(nome, ' ', cognome) LIKE ?");
+        $stmt->execute(['%' . $fullName . '%']);
+        $result = $stmt->fetch();
+        
+        if ($result) {
+            return $result['id'];
+        }
+        
+        // Crea nuovo dipendente se valido
+        if ($this->isValidEmployeeName($fullName)) {
+            $parts = explode(' ', trim($fullName));
+            $nome = $parts[0] ?? '';
+            $cognome = implode(' ', array_slice($parts, 1)) ?: '';
+            
+            $stmt = $this->conn->prepare("INSERT INTO dipendenti (nome, cognome) VALUES (?, ?)");
+            if ($stmt->execute([$nome, $cognome])) {
+                return $this->conn->lastInsertId();
+            }
+        }
+        
+        return null;
+    }
+    
+    private function findOrCreateCompany($companyName) {
+        if (empty($companyName)) return null;
+        
+        // Cerca prima nel cache
+        if ($this->master_companies_cache) {
+            foreach ($this->master_companies_cache as $comp) {
+                if (stripos($comp['nome'], $companyName) !== false) {
+                    return $comp['id'];
+                }
+            }
+        }
+        
+        // Se non trovato, cerca nel database
+        $stmt = $this->conn->prepare("SELECT id FROM clienti WHERE nome LIKE ?");
+        $stmt->execute(['%' . $companyName . '%']);
+        $result = $stmt->fetch();
+        
+        if ($result) {
+            return $result['id'];
+        }
+        
+        // Crea nuovo cliente
+        $stmt = $this->conn->prepare("INSERT INTO clienti (nome) VALUES (?)");
+        if ($stmt->execute([$companyName])) {
+            return $this->conn->lastInsertId();
+        }
+        
+        return null;
+    }
+    
+    private function isValidEmployeeName($name) {
+        $name = trim($name);
+        
+        if (empty($name) || strlen($name) < 2) return false;
+        
+        // Blacklist
+        $blacklist = ['Punto', 'Fiesta', 'Peugeot', 'Auto', 'Info', 'System', 'Admin', 'Test'];
+        if (in_array($name, $blacklist)) return false;
+        
+        if (preg_match('/^\d+$/', $name)) return false;
+        if (strpos($name, '@') !== false) return false;
+        
+        return true;
     }
 }
 ?>
