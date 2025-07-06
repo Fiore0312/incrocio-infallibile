@@ -214,7 +214,7 @@ if (!$system_ready) {
     echo "<p>Prima di utilizzare Smart Upload, completa il setup:</p>\n";
     echo "<div class='d-flex gap-2 flex-wrap'>\n";
     if ($employees_count < 10) {
-        echo "<a href='setup_master_schema.php' class='btn btn-warning btn-sm'><i class='fas fa-users me-1'></i>Setup Dipendenti ($employees_count/15)</a>\n";
+        echo "<a href='fix_database_schema.php' class='btn btn-warning btn-sm'><i class='fas fa-users me-1'></i>Setup Dipendenti ($employees_count/15)</a>\n";
     }
     if ($companies_count < 5) {
         echo "<a href='master_data_console.php' class='btn btn-warning btn-sm'><i class='fas fa-building me-1'></i>Setup Aziende ($companies_count)</a>\n";
@@ -248,7 +248,7 @@ echo "</div>\n";
 echo "<div class='col-md-6'>\n";
 echo "<ul class='mb-0 small'>\n";
 echo "<li><strong>Aziende Smart:</strong> Associazione automatica con confidenza</li>\n";
-echo "<li><strong>Progetti Dinamici:</strong> Auto-creazione progetti dal codice</li>\n";
+echo "<li><strong>Permessi & Progetti:</strong> Gestione completa autorizzazioni</li>\n";
 echo "<li><strong>Anti-Duplicazione:</strong> Finestra temporale intelligente</li>\n";
 echo "</ul>\n";
 echo "</div>\n";
@@ -261,7 +261,7 @@ echo "<form method='POST' enctype='multipart/form-data' id='smartUploadForm'>\n"
 echo "<div class='upload-zone mb-4' id='uploadZone'>\n";
 echo "<i class='fas fa-cloud-upload-alt fa-3x text-muted mb-3'></i>\n";
 echo "<h5>Trascina file CSV qui o clicca per selezionare</h5>\n";
-echo "<p class='text-muted'>Supporta: attività, timbrature, calendario, teamviewer</p>\n";
+echo "<p class='text-muted'>Supporta: attività, timbrature, calendario, teamviewer, permessi, progetti</p>\n";
 echo "</div>\n";
 
 echo "<div class='row'>\n";
@@ -287,6 +287,18 @@ echo "<div class='col-md-6 mb-3'>\n";
 echo "<label for='teamviewer' class='form-label'><i class='fas fa-desktop me-1'></i>TeamViewer</label>\n";
 echo "<input type='file' class='form-control' id='teamviewer' name='teamviewer' accept='.csv'>\n";
 echo "<div class='form-text'>Auto-associazione clienti ad aziende</div>\n";
+echo "</div>\n";
+
+echo "<div class='col-md-6 mb-3'>\n";
+echo "<label for='permessi' class='form-label'><i class='fas fa-user-shield me-1'></i>Permessi</label>\n";
+echo "<input type='file' class='form-control' id='permessi' name='permessi' accept='.csv'>\n";
+echo "<div class='form-text'>Gestione permessi dipendenti</div>\n";
+echo "</div>\n";
+
+echo "<div class='col-md-6 mb-3'>\n";
+echo "<label for='progetti' class='form-label'><i class='fas fa-project-diagram me-1'></i>Progetti</label>\n";
+echo "<input type='file' class='form-control' id='progetti' name='progetti' accept='.csv'>\n";
+echo "<div class='form-text'>Associazione progetti-clienti</div>\n";
 echo "</div>\n";
 echo "</div>\n";
 

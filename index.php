@@ -77,8 +77,8 @@ try {
                         <strong>Setup automatico disponibile:</strong><br>
                         Il sistema può creare automaticamente il database e configurare tutti i parametri necessari.
                     </p>
-                    <a href="setup.php" class="btn btn-warning">
-                        <i class="fas fa-cog me-2"></i>Avvia Setup Automatico
+                    <a href="smart_upload_final.php" class="btn btn-warning">
+                        <i class="fas fa-magic me-2"></i>Avvia Smart Upload Setup
                     </a>
                 <?php else: ?>
                     <p class="mb-0">

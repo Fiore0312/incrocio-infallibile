@@ -172,6 +172,10 @@ class SmartCsvParser {
                     return $this->processTeamviewerFile($filepath);
                 case 'calendario':
                     return $this->processCalendarioFile($filepath);
+                case 'richieste':
+                    return $this->processRichiesteFile($filepath);
+                case 'progetti':
+                    return $this->processProgettiFile($filepath);
                 default:
                     throw new Exception("Tipo file non riconosciuto: $detected_type");
             }
@@ -978,218 +982,242 @@ class SmartCsvParser {
         }
     }
     
-    // Metodi helper aggiuntivi
-    
-    private function detectCsvSeparator($handle) {
-        $pos = ftell($handle);
-        $first_line = fgets($handle);
-        fseek($handle, $pos);
+    private function processRichiesteFile($filepath) {
+        $this->logger->info("Inizio processing richieste", ['file' => $filepath]);
         
-        if (!$first_line) {
-            return ';';
+        $handle = fopen($filepath, 'r');
+        if (!$handle) {
+            throw new Exception("Impossibile aprire file richieste: $filepath");
         }
         
-        $separators = [',', ';', "\t", '|'];
-        $separator_counts = [];
+        // Rileva separatore
+        $separator = $this->detectCsvSeparator($handle);
         
-        foreach ($separators as $sep) {
-            $test_sep = ($sep === "\t") ? "\t" : $sep;
-            $count = substr_count($first_line, $test_sep);
-            $separator_counts[$test_sep] = $count;
+        // Leggi header
+        $header = fgetcsv($handle, 0, $separator);
+        if (!$header) {
+            throw new Exception("Header richieste non valido");
         }
         
-        $best_separator = array_search(max($separator_counts), $separator_counts);
-        return $best_separator ?: ';';
-    }
-    
-    private function removeBomFromHeader($header) {
-        if (empty($header)) return $header;
+        $header = $this->removeBomFromHeader($header);
+        $this->logger->info("Header richieste", ['columns' => $header]);
         
-        $first_col = $header[0];
-        if (substr($first_col, 0, 3) === "\xEF\xBB\xBF") {
-            $header[0] = substr($first_col, 3);
-        }
-        
-        $cleaned_header = [];
-        foreach ($header as $col) {
-            $cleaned_header[] = trim($col, " \t\n\r\0\x0B\xEF\xBB\xBF");
-        }
-        
-        return $cleaned_header;
-    }
-    
-    private function getValueSafe($data, $keys, $default = null) {
-        if (!is_array($keys)) {
-            $keys = [$keys];
-        }
-        
-        foreach ($keys as $key) {
-            if (isset($data[$key]) && !empty(trim($data[$key]))) {
-                return trim($data[$key]);
-            }
-        }
-        
-        return $default;
-    }
-    
-    private function cleanRowData($data) {
-        $cleaned = [];
-        foreach ($data as $key => $value) {
-            $cleaned_key = trim($key);
-            $cleaned_value = trim($value);
-            $cleaned[$cleaned_key] = $cleaned_value;
-        }
-        return $cleaned;
-    }
-    
-    private function parseDate($dateString) {
-        if (empty($dateString)) return null;
-        
-        $formats = ['d/m/Y', 'Y-m-d', 'd/m/Y H:i', 'Y-m-d H:i:s'];
-        
-        foreach ($formats as $format) {
-            $date = DateTime::createFromFormat($format, $dateString);
-            if ($date !== false) {
-                return $date->format('Y-m-d');
-            }
-        }
-        
-        return null;
-    }
-    
-    private function parseDateTime($dateString) {
-        if (empty($dateString)) return null;
-        
-        $formats = ['d/m/Y H:i:s', 'Y-m-d H:i:s', 'd/m/Y H:i', 'Y-m-d H:i', 'd/m/Y', 'Y-m-d'];
-        
-        foreach ($formats as $format) {
-            $date = DateTime::createFromFormat($format, $dateString);
-            if ($date !== false) {
-                return $date->format('Y-m-d H:i:s');
-            }
-        }
-        
-        return null;
-    }
-    
-    private function parseTime($timeString) {
-        if (empty($timeString)) return null;
-        
-        $date = DateTime::createFromFormat('d/m/Y H:i', $timeString);
-        if ($date !== false) {
-            return $date->format('H:i:s');
-        }
-        
-        return null;
-    }
-    
-    private function parseFloat($value) {
-        if (empty($value)) return 0;
-        return (float) str_replace(',', '.', $value);
-    }
-    
-    private function parseDuration($durationString) {
-        if (empty($durationString)) return 0;
-        
-        if (strpos($durationString, 'm') !== false) {
-            return (int) str_replace('m', '', $durationString);
-        }
-        
-        if (strpos($durationString, ':') !== false) {
-            $parts = explode(':', $durationString);
-            if (count($parts) >= 2) {
-                return (int)$parts[0] * 60 + (int)$parts[1];
-            }
-        }
-        
-        return (int) $durationString;
-    }
-    
-    private function isVehicleName($name) {
-        $vehicle_names = ['Punto', 'Fiesta', 'Peugeot', 'Auto', 'Veicolo'];
-        return in_array(trim($name), $vehicle_names);
-    }
-    
-    private function findOrCreateEmployee($fullName) {
-        if (empty($fullName)) return null;
-        
-        // Cerca prima nel cache
-        if ($this->master_employees_cache) {
-            foreach ($this->master_employees_cache as $emp) {
-                if (stripos($emp['nome_completo'], $fullName) !== false || 
-                    stripos($fullName, $emp['nome_completo']) !== false) {
-                    return $emp['id'];
-                }
-            }
-        }
-        
-        // Se non trovato, cerca nel database
-        $stmt = $this->conn->prepare("SELECT id FROM dipendenti WHERE CONCAT(nome, ' ', cognome) LIKE ?");
-        $stmt->execute(['%' . $fullName . '%']);
-        $result = $stmt->fetch();
-        
-        if ($result) {
-            return $result['id'];
-        }
-        
-        // Crea nuovo dipendente se valido
-        if ($this->isValidEmployeeName($fullName)) {
-            $parts = explode(' ', trim($fullName));
-            $nome = $parts[0] ?? '';
-            $cognome = implode(' ', array_slice($parts, 1)) ?: '';
+        $row_count = 0;
+        while (($row = fgetcsv($handle, 0, $separator)) !== FALSE) {
+            $row_count++;
+            $this->stats['processed']++;
             
-            $stmt = $this->conn->prepare("INSERT INTO dipendenti (nome, cognome) VALUES (?, ?)");
-            if ($stmt->execute([$nome, $cognome])) {
-                return $this->conn->lastInsertId();
+            if (count($row) !== count($header)) {
+                $this->warnings[] = "Riga $row_count: numero colonne non corrispondente";
+                $this->stats['skipped']++;
+                continue;
+            }
+            
+            $data = array_combine($header, $row);
+            $data = $this->cleanData($data);
+            
+            if ($this->processRichiesteRow($data)) {
+                $this->stats['inserted']++;
+            } else {
+                $this->stats['skipped']++;
             }
         }
         
-        return null;
+        fclose($handle);
+        $this->logger->info("Completato processing richieste", ['rows' => $row_count]);
+        
+        return [
+            'success' => true,
+            'stats' => $this->stats,
+            'errors' => $this->errors,
+            'warnings' => $this->warnings
+        ];
     }
     
-    private function findOrCreateCompany($companyName) {
-        if (empty($companyName)) return null;
+    private function processProgettiFile($filepath) {
+        $this->logger->info("Inizio processing progetti", ['file' => $filepath]);
         
-        // Cerca prima nel cache
-        if ($this->master_companies_cache) {
-            foreach ($this->master_companies_cache as $comp) {
-                if (stripos($comp['nome'], $companyName) !== false) {
-                    return $comp['id'];
-                }
+        $handle = fopen($filepath, 'r');
+        if (!$handle) {
+            throw new Exception("Impossibile aprire file progetti: $filepath");
+        }
+        
+        // Rileva separatore
+        $separator = $this->detectCsvSeparator($handle);
+        
+        // Leggi header
+        $header = fgetcsv($handle, 0, $separator);
+        if (!$header) {
+            throw new Exception("Header progetti non valido");
+        }
+        
+        $header = $this->removeBomFromHeader($header);
+        $this->logger->info("Header progetti", ['columns' => $header]);
+        
+        $row_count = 0;
+        while (($row = fgetcsv($handle, 0, $separator)) !== FALSE) {
+            $row_count++;
+            $this->stats['processed']++;
+            
+            if (count($row) !== count($header)) {
+                $this->warnings[] = "Riga $row_count: numero colonne non corrispondente";
+                $this->stats['skipped']++;
+                continue;
+            }
+            
+            $data = array_combine($header, $row);
+            $data = $this->cleanData($data);
+            
+            if ($this->processProgettiRow($data)) {
+                $this->stats['inserted']++;
+            } else {
+                $this->stats['skipped']++;
             }
         }
         
-        // Se non trovato, cerca nel database
-        $stmt = $this->conn->prepare("SELECT id FROM clienti WHERE nome LIKE ?");
-        $stmt->execute(['%' . $companyName . '%']);
-        $result = $stmt->fetch();
+        fclose($handle);
+        $this->logger->info("Completato processing progetti", ['rows' => $row_count]);
         
-        if ($result) {
-            return $result['id'];
-        }
-        
-        // Crea nuovo cliente
-        $stmt = $this->conn->prepare("INSERT INTO clienti (nome) VALUES (?)");
-        if ($stmt->execute([$companyName])) {
-            return $this->conn->lastInsertId();
-        }
-        
-        return null;
+        return [
+            'success' => true,
+            'stats' => $this->stats,
+            'errors' => $this->errors,
+            'warnings' => $this->warnings
+        ];
     }
     
-    private function isValidEmployeeName($name) {
-        $name = trim($name);
-        
-        if (empty($name) || strlen($name) < 2) return false;
-        
-        // Blacklist
-        $blacklist = ['Punto', 'Fiesta', 'Peugeot', 'Auto', 'Info', 'System', 'Admin', 'Test'];
-        if (in_array($name, $blacklist)) return false;
-        
-        if (preg_match('/^\d+$/', $name)) return false;
-        if (strpos($name, '@') !== false) return false;
-        
-        return true;
+    private function processRichiesteRow($data) {
+        try {
+            // Rileva dipendente (formato "Cognome, Nome" tipico del file richieste)
+            $dipendente_name = $this->getValueSafe($data, ['Dipendente']);
+            $dipendente_id = $this->getSmartEmployeeId($dipendente_name);
+            
+            if (!$dipendente_id) {
+                $this->warnings[] = "Dipendente non trovato per richiesta: $dipendente_name";
+                return false;
+            }
+            
+            // Determina tipo richiesta
+            $tipo_raw = $this->getValueSafe($data, ['Tipo'], '');
+            $tipo = $this->mapTipoRichiesta($tipo_raw);
+            
+            // Inserisci richiesta nella tabella legacy (se esiste) o crea record semplificato
+            $sql = "INSERT INTO richieste_assenze (
+                dipendente_id, tipo, data_richiesta, data_inizio, data_fine, stato, note
+            ) VALUES (
+                :dipendente_id, :tipo, :data_richiesta, :data_inizio, :data_fine, :stato, :note
+            ) ON DUPLICATE KEY UPDATE
+                stato = VALUES(stato),
+                note = VALUES(note),
+                updated_at = CURRENT_TIMESTAMP";
+                
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute([
+                ':dipendente_id' => $dipendente_id,
+                ':tipo' => $tipo,
+                ':data_richiesta' => $this->parseDateTime($this->getValueSafe($data, ['Data della richiesta'])),
+                ':data_inizio' => $this->parseDateTime($this->getValueSafe($data, ['Data inizio'])),
+                ':data_fine' => $this->parseDateTime($this->getValueSafe($data, ['Data fine'])),
+                ':stato' => $this->mapStatoRichiesta($this->getValueSafe($data, ['Stato'], 'in_attesa')),
+                ':note' => $this->getValueSafe($data, ['Note'])
+            ]);
+            
+        } catch (Exception $e) {
+            $this->errors[] = "Errore richiesta: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    private function processProgettiRow($data) {
+        try {
+            // Rileva capo progetto
+            $capo_progetto_name = $this->getValueSafe($data, ['Capo Progetto']);
+            $capo_progetto_id = null;
+            if (!empty($capo_progetto_name)) {
+                $capo_progetto_id = $this->getSmartEmployeeId($capo_progetto_name);
+            }
+            
+            // Rileva cliente/azienda
+            $cliente_id = null;
+            $azienda_name = $this->getValueSafe($data, ['Azienda Assegnataria', 'Cliente']);
+            if (!empty($azienda_name)) {
+                $cliente_id = $this->getSmartCompanyId($azienda_name);
+            }
+            
+            // Inserisci progetto
+            $sql = "INSERT INTO progetti (
+                codice, nome, stato, priorita, cliente_id, capo_progetto_id, 
+                data_inizio, data_scadenza, budget_ore
+            ) VALUES (
+                :codice, :nome, :stato, :priorita, :cliente_id, :capo_progetto_id,
+                :data_inizio, :data_scadenza, :budget_ore
+            ) ON DUPLICATE KEY UPDATE
+                nome = VALUES(nome),
+                stato = VALUES(stato),
+                priorita = VALUES(priorita),
+                cliente_id = VALUES(cliente_id),
+                capo_progetto_id = VALUES(capo_progetto_id),
+                updated_at = CURRENT_TIMESTAMP";
+                
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute([
+                ':codice' => $this->getValueSafe($data, ['Codice Progetto', 'Codice']),
+                ':nome' => $this->getValueSafe($data, ['Nome', 'Nome Progetto']),
+                ':stato' => $this->mapStatoProgetto($this->getValueSafe($data, ['Stato'], 'attivo')),
+                ':priorita' => $this->mapPriorita($this->getValueSafe($data, ['Priorità', 'Priorita'], 'media')),
+                ':cliente_id' => $cliente_id,
+                ':capo_progetto_id' => $capo_progetto_id,
+                ':data_inizio' => $this->parseDateTime($this->getValueSafe($data, ['Data Inizio', 'Creato il'])),
+                ':data_scadenza' => $this->parseDateTime($this->getValueSafe($data, ['Data Scadenza', 'Scadenza'])),
+                ':budget_ore' => $this->parseFloat($this->getValueSafe($data, ['Budget Ore'], '0'))
+            ]);
+            
+        } catch (Exception $e) {
+            $this->errors[] = "Errore progetto: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    // Helper methods per mapping
+    private function mapTipoRichiesta($tipo) {
+        $mapping = [
+            'Ferie' => 'ferie',
+            'Permessi' => 'permessi',
+            'ROL' => 'rol',
+            'Permessi ex festività' => 'ex_festivita',
+            'Malattia' => 'malattia'
+        ];
+        return $mapping[$tipo] ?? 'permessi';
+    }
+    
+    private function mapStatoRichiesta($stato) {
+        $mapping = [
+            'Approvata' => 'approvata',
+            'Rifiutata' => 'rifiutata',
+            'Annullamento approvato' => 'annullata',
+            'In attesa' => 'in_attesa'
+        ];
+        return $mapping[$stato] ?? 'in_attesa';
+    }
+    
+    private function mapStatoProgetto($stato) {
+        $mapping = [
+            'Attivo' => 'attivo',
+            'Sospeso' => 'sospeso',
+            'Completato' => 'completato',
+            'Cancellato' => 'cancellato'
+        ];
+        return $mapping[$stato] ?? 'attivo';
+    }
+    
+    private function mapPriorita($priorita) {
+        $mapping = [
+            'Alta' => 'alta',
+            'Media' => 'media',
+            'Bassa' => 'bassa',
+            'Critica' => 'critica'
+        ];
+        return $mapping[$priorita] ?? 'media';
     }
 }
 ?>
